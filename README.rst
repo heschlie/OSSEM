@@ -49,14 +49,12 @@ Generated Fields:
 - Number of Devices
 - Power Capacity
 
-Rack and Cabinet
-----------------
+Rack
+----
 
-A rack represents an equipment rack, and a cabinet is an extension of that, and
-really only there to allow a deliniation between the two as they are otherwise
-identical.  If tied to a managed CDU it will be able to better estimate the
-used and available power, otherwise it will rely on the power required field
-for Devices
+A rack represents an equipment rack.  If tied to a managed CDU it will be able
+to better estimate the used and available power, otherwise it will rely on the
+power required field for Devices.
 
 Fields:
 
@@ -77,7 +75,35 @@ Generated Fields:
 - Estimated power utilization
 - Estimated free power
 
+Cabinet(Rack)
+-------------
+
+A cabinet is essentially fuctionally equivalent to a rack, but it is enclosed.
+The separation is mostly based on personal experience of needing to know when
+it was one vs the other, and we also have the ability to flag them as locked.
+
+Fields:
+
+- Optional
+
+  - Locked
+
 Resource
 --------
 
-This is the parent for most end devices, it
+This is the parent for most end devices, it holds the important values that are
+similar across any Device, Interface, etc...
+
+Fields:
++++++++
+
+- Required
+
+  - Name
+  - Manufacturer
+  - Model
+
+- Optional
+
+  - Description
+  - Address
