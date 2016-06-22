@@ -1,3 +1,6 @@
+.. contents:: Table of contents
+   :depth: 2
+
 Notes for Django OSS Equipment Manager (OSSEM, pronounced 'awesome') for LabOps teams:
 
 This OSS is meant to be an alternative to something like Qualisystems, it will
