@@ -255,7 +255,7 @@ Fields:
 
   - Location
 
-    - Picklist of `Site`_\=>`Room`_\=>`Rack`_
+    - Picklist of `Site`_\=>\ `Room`_\=>\ `Rack`_
 
       - Maybe not picklist, but filtered text box?  Something to easily type in
         the name of the final spot (let's say a rack) and it would filter based on
