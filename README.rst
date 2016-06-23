@@ -1,3 +1,6 @@
+Welcome to OSSEM!
++++++++++++++++++
+
 .. contents:: **Table of contents**
    :depth: 3
 
@@ -43,8 +46,7 @@ Site
 
 A site is a large physical location, typically a city, campus, or building
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -56,8 +58,7 @@ Room
 The Room would be where something is stored, valid children would be things
 such as `Rack`_, `Device`_, `Shelf`_...
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -67,7 +68,7 @@ Fields:
 
   - Square footage
 
-Generated Fields:
+**Generated Fields:**
 
 - Number of racks
 - Number of shelves
@@ -81,8 +82,7 @@ A rack represents an equipment rack.  If tied to a managed `CDU`_ it will be abl
 to better estimate the used and available power, otherwise it will rely on the
 power required field for Devices.
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -94,7 +94,7 @@ Fields:
 
   - Power capacity
 
-Generated Fields:
+**Generated Fields:**
 
 - Occupied U space
 - Free U space
@@ -110,8 +110,7 @@ A cabinet is essentially functionally equivalent to a `Rack`_, but it is enclose
 The separation is mostly based on personal experience of needing to know when
 it was one vs the other, and we also have the ability to flag them as locked.
 
-Fields:
-+++++++
+**Fields:**
 
 - Optional
 
@@ -124,8 +123,7 @@ A shelf is just that, a shelf, though not a shelf in a `Rack`_.  This is for
 shelves that are in storage rooms, or just not actually a rack.  This is mainly
 a bucket to put equipment in.
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -142,8 +140,7 @@ Bench
 
 A workbench.
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -161,8 +158,7 @@ Examples:
 - Riverbed
 - Netgear
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -191,8 +187,7 @@ Example:
 - R720
 - Nexus 9000
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -232,8 +227,7 @@ similar across any `Device`_, `Interface`_, etc...
 
 This class/model is considered abstract and should not be instantiated directly.
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -253,9 +247,7 @@ Inherits from `Resource`_
 This is a generic representation of a device that one would rack or store somewhere.
 Most objects will derive from this model
 
-Fields:
-+++++++
-
+**Fields:**
 - Required
 
   - Location
@@ -303,8 +295,7 @@ power from the `Rack`_ that the CDU is in.
 We also assume that vertical CDUs are not occupying any rack units, and will omit
 the rack unit field from it.
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
@@ -329,8 +320,7 @@ User
 
 A user
 
-Fields:
-+++++++
+**Fields:**
 
 - Required
 
