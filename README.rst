@@ -1,4 +1,4 @@
-.. contents:: Table of contents
+.. contents:: **Table of contents**
    :depth: 3
 
 Notes for Django OSS Equipment Manager (OSSEM, pronounced 'awesome') for LabOps teams:
@@ -24,6 +24,7 @@ as indicated by the ().  Names in OSSEM need to be unique within domains.
 - `Cabinet`_\(`Rack`_)
 - `Site`_
 - `Room`_
+- `Topology`_
 - `User`_
 - `Group`_
 - `Domain`_
@@ -294,6 +295,19 @@ Fields:
   - Power capcity
   - Number of ports
 
+Topology
+--------
+
+A group of equipment that is tied together in a specific manner.  The equipment
+can be generic, just a specific `Model`_, or needing a specific piece of equipment.
+
+Reservation
+-----------
+
+A timeframe in which a `User`_ has claimed a set of equipment for use.  You can
+use a topology as a base for reserving equipment, or reserve equipment ad-hoc
+as needed.
+
 User
 ----
 
@@ -330,3 +344,40 @@ Domain
 
 A domain of equipment.  This can be used to isolate equipment groups, hide some
 equipment from users such as storage, and just get a better division of equipment
+
+Views
+#####
+
+We will end up needing many, many views, here is a start to that list that will
+almost definitely get bigger.  I will leave out the admin based views until it
+is decided that the Django admin cannot cope with what we need, or end up being
+counter intuitive.
+
+- Login
+- Login Domain Error
+- Equipment
+- User View
+- Group View
+- Domain View
+- Topology View
+- Connections
+
+Views breakdown
+===============
+
+Login
+-----
+
+A simple login page.  It should be clean and clear, you will enter your username
+and password, and select a `Domain`_ to login to, if no domain is picked it will
+log you into the first `Domain`_ on your list.
+
+If you try to login to a `Domain`_ you do not have access to, you should be presented
+with a 2nd view that let's you pick a domain you have access to.
+
+Login Domain Error
+------------------
+
+This view is a simple picklist of `Domain`_\s the `User`_ has access to.  This
+view is only presented when a `User`_ attempts to login to a `Domain`_ they do
+not have permissions for.
