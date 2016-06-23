@@ -10,7 +10,13 @@ Overview
 Notes for Django OSS Equipment Manager (OSSEM, pronounced 'awesome') for LabOps teams:
 
 This OSS is meant to be an alternative to something like Qualisystems, it will
-have a resource structure, reservations, equipment automation, and more.
+have a resource structure, reservations, equipment automation, and more.  Using
+the power of Python and Django we plan to create a software suite that will both
+manage your equipment, allow user reservations, generate topologies to share,
+and automate deployment of equipment and VMs.
+
+It will tie into at least ESXi and KVM, with plans for supporting HyperV and Xen
+as well.
 
 Models:
 #######
@@ -368,8 +374,7 @@ counter intuitive.
 - `Group View`_
 - `Domain View`_
 - `Topology View`_
-- Connections
-- Reservation View
+- `Reservation View`_
 
 Views breakdown
 ===============
@@ -448,3 +453,18 @@ a JavaScript canvas to display the equipment and it's relations.
 We should have the ability to search for equipment to add to this `Topology`_
 and select 1-2 `Device`_\s to bring up a connection dialogue and create the
 desired connections.
+
+Reservation View
+----------------
+
+This view will be almost identical to the `Topology View`_ but all `Device`_\s
+will be specific devices, as at this point you would be using real or virtual
+equipment.
+
+You will be able to reassign connections, and add or remove devices in this view
+as well.  The search will function the same as in the `Topology View`_ as in you
+can search for specific device or just a type of device, and drop them into the
+`Reservation`_ for use.
+
+Capabilities
+++++++++++++
