@@ -1,6 +1,9 @@
 .. contents:: **Table of contents**
    :depth: 3
 
+Overview
+########
+
 Notes for Django OSS Equipment Manager (OSSEM, pronounced 'awesome') for LabOps teams:
 
 This OSS is meant to be an alternative to something like Qualisystems, it will
@@ -10,7 +13,8 @@ Models:
 #######
 
 These are the models we will store in the DB, some of them inherit from others
-as indicated by the ().  Names in OSSEM need to be unique within domains.
+as indicated by the ().  Names in OSSEM need to be unique within domains Unless
+otherwise specified.
 
 - `Resource`_
 - `Device`_\(`Resource`_)
@@ -102,7 +106,7 @@ Cabinet
 
 Inherits from `Rack`_
 
-A cabinet is essentially fuctionally equivalent to a `Rack`_, but it is enclosed.
+A cabinet is essentially functionally equivalent to a `Rack`_, but it is enclosed.
 The separation is mostly based on personal experience of needing to know when
 it was one vs the other, and we also have the ability to flag them as locked.
 
@@ -226,7 +230,7 @@ Resource
 This is the parent for most end devices, it holds the important values that are
 similar across any `Device`_, `Interface`_, etc...
 
-This class/model is considered abstract and should not be instaciated directly.
+This class/model is considered abstract and should not be instantiated directly.
 
 Fields:
 +++++++
@@ -266,6 +270,18 @@ Fields:
 
     - Only if in a Rack
 
+- Optional
+
+  - Console server
+
+    - Serial console server or aggregator that you can connect to for serial
+      access to the Device
+
+  - Console Server Port(s)
+
+    - A comma separated list of port numbers that the Device is connected to,
+      this supports a more or less unlimited number of ports.
+
 Interface
 ---------
 
@@ -304,7 +320,7 @@ can be generic, just a specific `Model`_, or needing a specific piece of equipme
 Reservation
 -----------
 
-A timeframe in which a `User`_ has claimed a set of equipment for use.  You can
+A time-frame in which a `User`_ has claimed a set of equipment for use.  You can
 use a topology as a base for reserving equipment, or reserve equipment ad-hoc
 as needed.
 
@@ -353,9 +369,11 @@ almost definitely get bigger.  I will leave out the admin based views until it
 is decided that the Django admin cannot cope with what we need, or end up being
 counter intuitive.
 
-- Login
-- Login Domain Error
-- Equipment
+- `Login`_
+- `Login Domain Error`_
+- `Equipment`_
+- `Equipment List`_
+- `Equipment Search`_
 - User View
 - Group View
 - Domain View
@@ -381,3 +399,31 @@ Login Domain Error
 This view is a simple picklist of `Domain`_\s the `User`_ has access to.  This
 view is only presented when a `User`_ attempts to login to a `Domain`_ they do
 not have permissions for.
+
+Equipment
+---------
+
+The equipment view will list the required fields and custom attributes for the
+current `Device`_.  If the `User`_ is an admin they should be able to edit any of
+the fields that are not generated or locked.
+
+Equipment List
+--------------
+
+This will show a list of `Device`_\s that will show the required fields side by
+side by default, with the option to show the custom attributes.
+
+We should have the ability to show and hide the custom attributes on a per attribute
+level.  This would allow `User`_\s to compare these fields if they need to check
+for consistency.
+
+Equipment Search
+----------------
+
+A search page that lets you search based on any field for any device.  When
+searching a custom field, you will need to specify the Key at a minimum, and
+optionally a value to search by.  You can search based on just key if, for instance,
+you need to find all devices that share a key so you can compare.
+
+The search page should use a nested list page for the results, but leave the search
+parameters intact between searches.
