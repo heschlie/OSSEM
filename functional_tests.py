@@ -4,7 +4,7 @@ from unittest import TestCase
 
 class TestReadMe(TestCase):
     """
-    Cause, why not?  We want to make sure the README is always a valid format
+    Cause, why not?  We want to make sure the README is always in a valid format
     to be rendered.
     """
 

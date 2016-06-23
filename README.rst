@@ -364,11 +364,12 @@ counter intuitive.
 - `Equipment`_
 - `Equipment List`_
 - `Equipment Search`_
-- User View
-- Group View
-- Domain View
-- Topology View
+- `User View`_
+- `Group View`_
+- `Domain View`_
+- `Topology View`_
 - Connections
+- Reservation View
 
 Views breakdown
 ===============
@@ -417,3 +418,33 @@ you need to find all devices that share a key so you can compare.
 
 The search page should use a nested list page for the results, but leave the search
 parameters intact between searches.
+
+User View
+---------
+
+A simple view for the User model to display the `User`_\s info, as well as their
+`Group`_ and `Domain`_ membership.
+
+Group View
+----------
+
+A simple view that lists the `User`_\s in a `Group`_, as well as what `Domain`_\s
+the group has access to.
+
+Domain View
+-----------
+
+A simple view for `Domain`_\s that lists the `Group`_\s and `User`_\s that have
+access to this `Domain`_.
+
+Topology View
+-------------
+
+This view is probably one of the more complex views, we would need to be able
+to display both specific and generic `Device`_\s and the connections between
+them in a view that is clean and sensible.  It might be best to turn this into
+a JavaScript canvas to display the equipment and it's relations.
+
+We should have the ability to search for equipment to add to this `Topology`_
+and select 1-2 `Device`_\s to bring up a connection dialogue and create the
+desired connections.
