@@ -5,7 +5,7 @@ Welcome to OSSEM!
    :depth: 3
 
 Overview
-########
+++++++++
 
 Notes for Django OSS Equipment Manager (OSSEM, pronounced 'awesome') for LabOps teams:
 
@@ -18,7 +18,7 @@ and automate deployment of equipment and VMs.
 It will tie into at least ESXi and KVM, with plans for supporting HyperV and Xen
 as well.
 
-Models:
+Models
 #######
 
 These are the models we will store in the DB, some of them inherit from others
@@ -42,7 +42,7 @@ otherwise specified.
 - `Group`_
 - `Domain`_
 
-Model breakdowns:
+Model breakdowns
 =================
 
 Here we will go over each model and its purpose
@@ -468,3 +468,30 @@ can search for specific device or just a type of device, and drop them into the
 
 Capabilities
 ++++++++++++
+
+The system should be able to manage deployment and provisioning of equipment.
+This includes spinning up new VMs (regardless of hypervisor) installing an OS
+on said VM or a newly installed piece of hardware, restoring equipment to a
+known good state in a manner determined by the user/admin.  Controlling access
+to equipment.  Powering equipment on and off when in use and not in use.  Managing
+L1 and L2 connectivity between equipment.
+
+Admins and users will also be able to write their own tools integrating with OSSEM
+and callable from within reservations, or at the start or end of them, as well as
+any other hooks that come up, and on demand.  Admins should be able to specify
+deferment time for tasks as well (e.g. deferring a task to factory reset a router
+after a reservation has ended in case the user needs to redeploy that setup immediately
+and simply forgot his reservation was ending) and setting cron like tasks to be
+executed.
+
+All tasks should be done through REST calls to the server.  This will allow admins
+to write tools to use OSSEM in any language they choose.  These tools will also
+be callable from OSSEM if the user has installed the appropriate software to back
+them on the system (e.g. installing Perl to call Perl scripts from OSSEM).  These
+tools should be stored in a directory structure that will then be parsed by OSSEM.
+We may want to specify a "module" by putting a README with the script that can
+be read into OSSEM.
+
+We will ship a REST-API wrapper for OSSEM that users can import and then use to
+more easily play with OSSEM.  The API will be well documented so end users or admins
+can write their own wrappers in their favorite languages if they prefer.
