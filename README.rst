@@ -7,7 +7,8 @@ Welcome to OSSEM!
 Overview
 ++++++++
 
-Notes for Django OSS Equipment Manager (OSSEM, pronounced 'awesome') for LabOps teams:
+Notes for Django OSS Equipment Manager (OSSEM, pronounced 'awesome') for LabOps
+teams:
 
 This OSS is meant to be an alternative to something like Qualisystems, it will
 have a resource structure, reservations, equipment automation, and more.  Using
@@ -233,6 +234,8 @@ similar across any `Device`_, `Interface`_, etc...
 
 This class/model is considered abstract and should not be instantiated directly.
 
+Children of a Resource is a one-to-many field that references itself.
+
 **Fields:**
 
 - Required
@@ -244,6 +247,7 @@ This class/model is considered abstract and should not be instantiated directly.
 
   - Description
   - Address
+  - Children
 
 Device
 ----------------
