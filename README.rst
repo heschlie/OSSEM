@@ -35,7 +35,6 @@ otherwise specified.
 - `Rack`_
 - `Shelf`_
 - `Bench`_
-- `Cabinet`_\(`Rack`_)
 - `Site`_
 - `Room`_
 - `Topology`_
@@ -58,6 +57,13 @@ A site is a large physical location, typically a city, campus, or building
 - Required
 
   - Name
+**Generated Fields:**
+
+- Number of Rooms
+- Number of Racks
+- Number of Shelves
+- Number of Benches
+- Number of devices
 
 Room
 ----
@@ -108,21 +114,6 @@ power required field for Devices.
 - Estimated power utilization
 - Estimated free power
 
-Cabinet
--------------
-
-Inherits from `Rack`_
-
-A cabinet is essentially functionally equivalent to a `Rack`_, but it is enclosed.
-The separation is mostly based on personal experience of needing to know when
-it was one vs the other, and we also have the ability to flag them as locked.
-
-**Fields:**
-
-- Optional
-
-  - Locked
-
 Shelf
 ------
 
@@ -152,6 +143,26 @@ A workbench.
 - Required
 
   - `Room`_
+
+Location
+--------
+
+A wrapper class to encapsulate `Site`_, `Room`_, `Rack`_, and `Bench`_. this
+allows us to put one location field in the `Resource`_ class in order to make
+it so you can have any or all of those classes listed for the location.
+
+On whatever form a user fills out for this, it should populate the other fields
+when it can, for instance, if you pick a `Room`_ it should populate the `Site`_
+automatically.
+
+- Required
+
+  - `Site`_
+- Optional
+
+  - `Room`_
+  - `Rack`_
+  - `Bench`_
 
 Manufacturer
 ------------
