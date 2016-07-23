@@ -24,6 +24,7 @@ class Model_(models.Model):
 class Resource(models.Model):
     name = models.CharField(max_length=240, default='default_name')
     model = models.ForeignKey(Model_, related_name='devices', default=None)
+    parent = models.ForeignKey('self', related_name='children', null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -128,6 +129,14 @@ class DeviceContainer(models.Model):
             num_device += location.devices.count()
 
         return num_device
+
+    @property
+    def get_devices(self):
+        devices = []
+        for location in self.locations.all():
+            devices.extend(location.devices.all())
+
+        return devices
 
     class Meta:
         abstract = True

@@ -59,7 +59,7 @@ class ModelTests(TestCase):
         location.save()
 
         # Let's test the calculated fields here
-        # We only need to test the location class as it pulls from the other
+        # We only need to test the Site class as it pulls from the other
         # calculated properties of the others
         saved_site = Site.objects.first()
         self.assertEqual(saved_site.number_of_rooms, 1)
@@ -67,11 +67,18 @@ class ModelTests(TestCase):
         self.assertEqual(saved_site.number_of_benches, 1)
         self.assertEqual(saved_site.number_of_shelves, 1)
 
+        saved_location = Location.objects.get(site__name=site.name,
+                                              room__name=room.name,
+                                              rack__name=rack.name,
+                                              bench__name=bench.name,
+                                              shelf__name=shelf.name)
+        self.assertEqual(location, saved_location)
+
         # finally we can create a device
         device = Device()
         device.name = 'test-device-01'
         device.model = model
-        device.location = location
+        device.location = saved_location
         device.rack_elevation = 36
         device.save()
 
