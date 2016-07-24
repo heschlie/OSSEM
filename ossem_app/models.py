@@ -33,6 +33,11 @@ class Resource(models.Model):
         return self.name
 
 
+class Device(Resource):
+    location = models.ForeignKey('Location', related_name='devices')
+    rack_elevation = models.IntegerField(default=0)
+
+
 class Site(models.Model):
     name = models.CharField(max_length=240, default='')
 
@@ -176,8 +181,3 @@ class Location(models.Model):
     rack = models.ForeignKey(Rack, related_name='locations', default=None)
     bench = models.ForeignKey(Bench, related_name='locations', default=None)
     shelf = models.ForeignKey(Shelf, related_name='locations', default=None)
-
-
-class Device(Resource):
-    location = models.ForeignKey(Location, related_name='devices')
-    rack_elevation = models.IntegerField(default=0)
