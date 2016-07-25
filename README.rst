@@ -57,6 +57,7 @@ A site is a large physical location, typically a city, campus, or building
 - Required
 
   - Name
+
 **Generated Fields:**
 
 - Number of Rooms
@@ -269,6 +270,7 @@ This is a generic representation of a device that one would rack or store somewh
 Most objects will derive from this model
 
 **Fields:**
+
 - Required
 
   - Location

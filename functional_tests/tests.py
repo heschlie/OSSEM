@@ -15,6 +15,8 @@ class TestReadMe(TestCase):
             rst = f.read()
             errors = list(rstcheck.check(rst))
 
+            for line, error in errors:
+                print('{}: {}'.format(line, error))
             self.assertTrue(len(errors) == 0)
 
 

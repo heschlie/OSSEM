@@ -125,8 +125,7 @@ class ModelTests(TestCase):
         saved_site = Site.objects.first()
         # We need to compare to 33 here, as each device is in a Rack, Shelf,
         # and on a Bench.
-        # TODO: get this to pass with `len(devs)`
-        self.assertEqual(saved_site.number_of_devices, 33)
+        self.assertEqual(saved_site.number_of_devices, len(devs))
         for dev in devs:
             saved_dev = Device.objects.get(name=dev.name)
             self.assertEqual(saved_dev, dev)

@@ -74,8 +74,8 @@ class Site(models.Model):
     @property
     def number_of_devices(self):
         num_device = 0
-        for room in self.rooms.all():
-            num_device += room.number_of_devices
+        for location in self.locations.all():
+            num_device += location.devices.count()
 
         return num_device
 
@@ -192,7 +192,7 @@ class Bench(DeviceContainer):
 
 
 class Shelf(DeviceContainer):
-    number_of_shlelves = models.IntegerField(default=0)
+    number_of_shelves = models.IntegerField(default=0)
     room = models.ForeignKey(Room, related_name='shelves', default=None)
 
 
