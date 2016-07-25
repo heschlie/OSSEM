@@ -86,6 +86,9 @@ class Site(models.Model):
             devs.extend(room.devices)
         return devs
 
+    def __str__(self):
+        return self.name
+
 
 class Room(models.Model):
     name = models.CharField(max_length=240, default='')
@@ -107,28 +110,21 @@ class Room(models.Model):
     @property
     def number_of_devices(self):
         num_device = 0
-        for rack in self.racks.all():
-            num_device += rack.number_of_devices
-
-        for bench in self.benches.all():
-            num_device += bench.number_of_devices
-
-        for shelf in self.shelves.all():
-            num_device += shelf.number_of_devices
+        for location in self.locations.all():
+            num_device += location.devices.count()
 
         return num_device
 
     @property
     def devices(self):
         devs = set()
-        for rack in self.racks.all():
-            devs.update(rack.devices)
-        for bench in self.benches.all():
-            devs.update(bench.devices)
-        for shelf in self.shelves.all():
-            devs.update(shelf.devices)
+        for location in self.locations.all():
+            devs.update(location.devices.all())
 
         return devs
+
+    def __str__(self):
+        return self.name
 
 
 class DeviceContainer(models.Model):
@@ -160,9 +156,12 @@ class DeviceContainer(models.Model):
     def devices(self):
         devices = set()
         for location in self.locations.all():
-            devices.add(location.devices.all())
+            devices.update(location.devices.all())
 
         return devices
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         abstract = True
