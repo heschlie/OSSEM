@@ -1,6 +1,7 @@
 from django.test import TestCase
 from ossem_app.models import *
 
+
 # Create your tests here.
 class ModelTests(TestCase):
 
@@ -11,14 +12,14 @@ class ModelTests(TestCase):
         mf.save()
 
         # next we need a model
-        model = Model_()
-        model.manufacturer = mf
-        model.name = 'test-model'
-        model.size = 2
-        model.shared_rack_unit = False
-        model.num_power_ports = 1
-        model.estimated_kva_draw = 1.5
-        model.save()
+        model_ = Model_()
+        model_.manufacturer = mf
+        model_.name = 'test-model'
+        model_.size = 2
+        model_.shared_rack_unit = False
+        model_.num_power_ports = 1
+        model_.estimated_kva_draw = 1.5
+        model_.save()
 
         # next we need to create a Location, which requires a site at a minimum
         # but we should test all the fields
@@ -77,7 +78,7 @@ class ModelTests(TestCase):
         # finally we can create a device
         device = Device()
         device.name = 'test-device-01'
-        device.model = model
+        device.model = model_
         device.location = saved_location
         device.rack_elevation = 36
         device.save()
@@ -88,11 +89,11 @@ class ModelTests(TestCase):
         self.assertEqual(saved_mf.name, mf.name)
 
         saved_model = saved_mf.models.all()[0]
-        self.assertEqual(model, saved_model)
-        self.assertEqual(saved_model.name, model.name)
-        self.assertEqual(saved_model.size, model.size)
-        self.assertEqual(saved_model.shared_rack_unit, model.shared_rack_unit)
-        self.assertEqual(saved_model.num_power_ports, model.num_power_ports)
+        self.assertEqual(model_, saved_model)
+        self.assertEqual(saved_model.name, model_.name)
+        self.assertEqual(saved_model.size, model_.size)
+        self.assertEqual(saved_model.shared_rack_unit, model_.shared_rack_unit)
+        self.assertEqual(saved_model.num_power_ports, model_.num_power_ports)
 
         saved_device = saved_model.devices.all()[0]
         self.assertEqual(device, saved_device)
