@@ -12,65 +12,75 @@ class ModelTests(TestCase):
         :return:
         """
         # first we need a manufacturer
-        self.mf = Manufacturer()
-        self.mf.name = 'ossem company'
+        self.mf = Manufacturer(
+            name='ossem company'
+        )
         self.mf.save()
 
         # next we need a model
-        self.model_ = Model_()
-        self.model_.manufacturer = self.mf
-        self.model_.name = 'test-model'
-        self.model_.size = 2
-        self.model_.shared_rack_unit = False
-        self.model_.num_power_ports = 1
-        self.model_.estimated_kva_draw = 1.5
+        self.model_ = Model_(
+            name='test-model',
+            manufacturer=self.mf,
+            size=2,
+            shared_rack_unit=False,
+            num_power_ports=1,
+            estimated_kva_draw=1.5
+        )
         self.model_.save()
 
         # next we need to create a Location, which requires a site at a minimum
         # but we should test all the fields
-        self.site = Site(name='San Jose')
+        self.site = Site(
+            name='San Jose'
+        )
         self.site.save()
 
-        self.room = Room()
-        self.room.name = 'Lab 2'
-        self.room.site = self.site
-        self.room.size = '2500sqft'
+        self.room = Room(
+            name='Lab 2',
+            site=self.site,
+            size='2500sqft'
+        )
         self.room.save()
 
-        self.rack = Rack()
-        self.rack.name = '12-15'
-        self.rack.units = 52
-        self.rack.room = self.room
-        self.rack.max_kva = 14.2
+        self.rack = Rack(
+            name='12-15',
+            total_rack_units=52,
+            room=self.room,
+            max_kva=14.2
+        )
         self.rack.save()
 
-        self.bench = Bench()
-        self.bench.name = 'Bench 5'
-        self.bench.room = self.room
-        self.bench.max_kva = 2.0
+        self.bench = Bench(
+            name='Bench 5',
+            room=self.room,
+            max_kva=2.0
+        )
         self.bench.save()
 
-        self.shelf = Shelf()
-        self.shelf.name = 'Dell storage shelf'
-        self.shelf.room = self.room
-        self.shelf.max_kva = 1.0
+        self.shelf = Shelf(
+            name='Dell Storage shelf',
+            room=self.room,
+            max_kva=1.0
+        )
         self.shelf.save()
 
         # With all the above we can create a location
-        self.location = Location()
-        self.location.site = self.site
-        self.location.room = self.room
-        self.location.rack = self.rack
-        self.location.bench = self.bench
-        self.location.shelf = self.shelf
+        self.location = Location(
+            site=self.site,
+            room=self.room,
+            rack=self.rack,
+            bench=self.bench,
+            shelf=self.shelf
+        )
         self.location.save()
 
         # And now our device to test against
-        self.device = Device()
-        self.device.name = 'test-device-01'
-        self.device.model = self.model_
-        self.device.location = self.location
-        self.device.rack_elevation = 36
+        self.device = Device(
+            name='test-device-01',
+            model=self.model_,
+            location=self.location,
+            rack_elevation=36
+        )
         self.device.save()
 
         # Why not a list of other devices as well
