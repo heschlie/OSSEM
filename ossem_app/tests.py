@@ -1,24 +1,22 @@
 from django.test import TestCase
-from ossem_app.models import *
-from ossem_app.views import *
+from ossem_app import models, views, urls
 
 
 # Create your tests here.
 class ModelTests(TestCase):
-
     def setup_lab(self):
         """
         This is used to setup a mock lab to test against
         :return:
         """
         # first we need a manufacturer
-        self.mf = Manufacturer(
+        self.mf = models.Manufacturer(
             name='ossem company'
         )
         self.mf.save()
 
         # next we need a model
-        self.model_ = Model_(
+        self.model_ = models.Model_(
             name='test-model',
             manufacturer=self.mf,
             size=2,
@@ -30,19 +28,19 @@ class ModelTests(TestCase):
 
         # next we need to create a Location, which requires a site at a minimum
         # but we should test all the fields
-        self.site = Site(
+        self.site = models.Site(
             name='San Jose'
         )
         self.site.save()
 
-        self.room = Room(
+        self.room = models.Room(
             name='Lab 2',
             site=self.site,
             size='2500sqft'
         )
         self.room.save()
 
-        self.rack = Rack(
+        self.rack = models.Rack(
             name='12-15',
             total_rack_units=52,
             room=self.room,
@@ -50,14 +48,14 @@ class ModelTests(TestCase):
         )
         self.rack.save()
 
-        self.bench = Bench(
+        self.bench = models.Bench(
             name='Bench 5',
             room=self.room,
             max_kva=2.0
         )
         self.bench.save()
 
-        self.shelf = Shelf(
+        self.shelf = models.Shelf(
             name='Dell Storage shelf',
             room=self.room,
             max_kva=1.0
@@ -65,7 +63,7 @@ class ModelTests(TestCase):
         self.shelf.save()
 
         # With all the above we can create a location
-        self.location = Location(
+        self.location = models.Location(
             site=self.site,
             room=self.room,
             rack=self.rack,
@@ -75,7 +73,7 @@ class ModelTests(TestCase):
         self.location.save()
 
         # And now our device to test against
-        self.device = Device(
+        self.device = models.Device(
             name='test-device-01',
             model=self.model_,
             location=self.location,
@@ -86,7 +84,7 @@ class ModelTests(TestCase):
         # Why not a list of other devices as well
         self.devs = [self.device]
         for i in range(10):
-            dev = Device(
+            dev = models.Device(
                 name='test-mydev-{}'.format(i),
                 model=self.model_,
                 location=self.location,
@@ -99,7 +97,7 @@ class ModelTests(TestCase):
         self.setup_lab()
 
     def test_site(self):
-        saved_site = Site.objects.first()
+        saved_site = models.Site.objects.first()
 
         # Verify we see all of the other location related objects from here
         self.assertEqual(saved_site.number_of_rooms, 1)
@@ -110,30 +108,30 @@ class ModelTests(TestCase):
 
         self.assertEqual(saved_site.number_of_devices, len(self.devs))
         for dev in self.devs:
-            saved_dev = Device.objects.get(name=dev.name)
+            saved_dev = models.Device.objects.get(name=dev.name)
             self.assertEqual(saved_dev, dev)
 
         self.assertIn(self.devs[0], saved_site.devices)
 
     def test_room(self):
-        saved_room = Room.objects.first()
+        saved_room = models.Room.objects.first()
 
         self.assertIn(self.devs[0], saved_room.devices)
         self.assertGreater(saved_room.number_of_devices, 0)
         self.assertEqual(str(saved_room), str(self.room))
 
     def test_bench(self):
-        saved_bench = Bench.objects.first()
+        saved_bench = models.Bench.objects.first()
 
         self.assertIn(self.devs[0], saved_bench.devices)
 
     def test_shelf(self):
-        saved_shelf = Shelf.objects.first()
+        saved_shelf = models.Shelf.objects.first()
 
         self.assertIn(self.devs[0], saved_shelf.devices)
 
     def test_rack(self):
-        saved_rack = Rack.objects.first()
+        saved_rack = models.Rack.objects.first()
 
         self.assertEqual(saved_rack, self.rack)
         self.assertEqual(str(saved_rack), str(self.rack))
@@ -148,22 +146,24 @@ class ModelTests(TestCase):
         # verify we can look up the location on out names
         # This should be done first when creating a new location to verify that
         # we are not creating new locations when not necessary
-        saved_location = Location.objects.get(site__name=self.site.name,
-                                              room__name=self.room.name,
-                                              rack__name=self.rack.name,
-                                              bench__name=self.bench.name,
-                                              shelf__name=self.shelf.name)
+        saved_location = models.Location.objects.get(
+            site__name=self.site.name,
+            room__name=self.room.name,
+            rack__name=self.rack.name,
+            bench__name=self.bench.name,
+            shelf__name=self.shelf.name
+        )
 
         self.assertEqual(self.location, saved_location)
 
     def test_manufacturer(self):
-        saved_mf = Manufacturer.objects.first()
+        saved_mf = models.Manufacturer.objects.first()
 
         self.assertEqual(self.mf, saved_mf)
         self.assertEqual(str(saved_mf), str(self.mf))
 
     def test_model_(self):
-        saved_model = Model_.objects.first()
+        saved_model = models.Model_.objects.first()
 
         self.assertEqual(self.model_, saved_model)
         self.assertEqual(str(saved_model), str(self.model_))
@@ -174,7 +174,7 @@ class ModelTests(TestCase):
                          self.model_.num_power_ports)
 
     def test_device(self):
-        saved_device = Device.objects.first()
+        saved_device = models.Device.objects.first()
 
         self.assertEqual(self.device, saved_device)
         self.assertEqual(str(saved_device), str(self.device))
@@ -182,3 +182,11 @@ class ModelTests(TestCase):
         self.assertEqual(saved_device.location, self.device.location)
         self.assertEqual(saved_device.rack_elevation,
                          self.device.rack_elevation)
+
+
+class UrlTests(TestCase):
+    pass
+
+
+class ViewTests(TestCase):
+    pass
