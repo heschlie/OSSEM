@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Manufacturer(models.Model):
     name = models.CharField(max_length=240, default='default_name')
@@ -24,7 +25,8 @@ class Model_(models.Model):
 class Resource(models.Model):
     name = models.CharField(max_length=240, default='default_name')
     model = models.ForeignKey(Model_, related_name='devices', default=None)
-    parent = models.ForeignKey('self', related_name='children', null=True, blank=True)
+    parent = models.ForeignKey('self', related_name='children', null=True,
+                               blank=True)
 
     class Meta:
         abstract = True
@@ -77,6 +79,13 @@ class Site(models.Model):
 
         return num_device
 
+    @property
+    def devices(self):
+        devs = []
+        for room in self.rooms.all():
+            devs.extend(room.devices)
+        return devs
+
 
 class Room(models.Model):
     name = models.CharField(max_length=240, default='')
@@ -109,6 +118,18 @@ class Room(models.Model):
 
         return num_device
 
+    @property
+    def devices(self):
+        devs = set()
+        for rack in self.racks.all():
+            devs.update(rack.devices)
+        for bench in self.benches.all():
+            devs.update(bench.devices)
+        for shelf in self.shelves.all():
+            devs.update(shelf.devices)
+
+        return devs
+
 
 class DeviceContainer(models.Model):
     name = models.CharField(max_length=240, default='')
@@ -136,10 +157,10 @@ class DeviceContainer(models.Model):
         return num_device
 
     @property
-    def get_devices(self):
-        devices = []
+    def devices(self):
+        devices = set()
         for location in self.locations.all():
-            devices.extend(location.devices.all())
+            devices.add(location.devices.all())
 
         return devices
 

@@ -20,7 +20,7 @@ class ModelTests(TestCase):
         model.estimated_kva_draw = 1.5
         model.save()
 
-        # next we need to create a Location, which requires a site at a minimum,
+        # next we need to create a Location, which requires a site at a minimum
         # but we should test all the fields
         site = Site(name='San Jose')
         site.save()
@@ -106,4 +106,26 @@ class ModelTests(TestCase):
         saved_rack = Rack.objects.first()
         self.assertGreater(saved_rack.estimated_power_draw, 1)
         self.assertLess(saved_rack.estimated_free_kva, saved_rack.max_kva)
-        self.assertLess(saved_rack.available_rack_units, saved_rack.total_rack_units)
+        self.assertLess(saved_rack.available_rack_units,
+                        saved_rack.total_rack_units)
+
+        # Let's create a few more devices and see if it all still works
+        devs = [saved_device]
+        for i in range(10):
+            dev = Device(
+                name='test-mydev-{}'.format(i),
+                model=saved_model,
+                location=saved_location,
+                rack_elevation=i + 3
+            )
+            dev.save()
+            devs.append(dev)
+
+        saved_site = Site.objects.first()
+        # We need to compare to 33 here, as each device is in a Rack, Shelf,
+        # and on a Bench.
+        # TODO: get this to pass with `len(devs)`
+        self.assertEqual(saved_site.number_of_devices, 33)
+        for dev in devs:
+            saved_dev = Device.objects.get(name=dev.name)
+            self.assertEqual(saved_dev, dev)
