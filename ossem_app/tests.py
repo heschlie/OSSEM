@@ -48,6 +48,14 @@ class ModelTests(TestCase):
         )
         self.rack.save()
 
+        self.rack_b = models.Rack(
+            name='12-16',
+            total_rack_units=52,
+            room=self.room,
+            max_kva=14.2
+        )
+        self.rack_b.save()
+
         self.bench = models.Bench(
             name='Bench 5',
             room=self.room,
@@ -71,6 +79,13 @@ class ModelTests(TestCase):
             shelf=self.shelf
         )
         self.location.save()
+
+        self.location_b = models.Location(
+            site=self.site,
+            room=self.room,
+            rack=self.rack_b
+        )
+        self.location_b.save()
 
         # And now our device to test against
         self.device = models.Device(
@@ -100,10 +115,10 @@ class ModelTests(TestCase):
         saved_site = models.Site.objects.first()
 
         # Verify we see all of the other location related objects from here
-        self.assertEqual(saved_site.number_of_rooms, 1)
-        self.assertEqual(saved_site.number_of_racks, 1)
-        self.assertEqual(saved_site.number_of_benches, 1)
-        self.assertEqual(saved_site.number_of_shelves, 1)
+        self.assertGreater(saved_site.number_of_rooms, 0)
+        self.assertGreater(saved_site.number_of_racks, 0)
+        self.assertGreater(saved_site.number_of_benches, 0)
+        self.assertGreater(saved_site.number_of_shelves, 0)
         self.assertEqual(str(saved_site), str(self.site))
 
         self.assertEqual(saved_site.number_of_devices, len(self.devs))
@@ -155,6 +170,18 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(self.location, saved_location)
+        self.assertEqual(str(self.location), str(saved_location))
+
+        saved_location_b = models.Location.objects.get(
+            site__name=self.site.name,
+            room__name=self.room.name,
+            rack__name=self.rack_b.name
+        )
+
+        self.assertEqual(self.location_b, saved_location_b)
+        self.assertEqual(str(self.location_b), str(saved_location_b))
+
+        self.assertNotEqual(saved_location_b, saved_location)
 
     def test_manufacturer(self):
         saved_mf = models.Manufacturer.objects.first()

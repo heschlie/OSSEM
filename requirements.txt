@@ -13,3 +13,4 @@ snowballstemmer>=1.2.1
 Sphinx>=1.4.4
 django==1.8.14
 coverage>=4.1
+django-nose>=1.4.4

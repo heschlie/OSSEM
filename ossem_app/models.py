@@ -196,8 +196,26 @@ class Shelf(DeviceContainer):
 
 
 class Location(models.Model):
-    site = models.ForeignKey(Site, related_name='locations', default=None)
-    room = models.ForeignKey(Room, related_name='locations', default=None)
-    rack = models.ForeignKey(Rack, related_name='locations', default=None)
-    bench = models.ForeignKey(Bench, related_name='locations', default=None)
-    shelf = models.ForeignKey(Shelf, related_name='locations', default=None)
+    site = models.ForeignKey(Site, related_name='locations', null=True,
+                             blank=True)
+    room = models.ForeignKey(Room, related_name='locations', null=True,
+                             blank=True)
+    rack = models.ForeignKey(Rack, related_name='locations', null=True,
+                             blank=True)
+    bench = models.ForeignKey(Bench, related_name='locations', null=True,
+                              blank=True)
+    shelf = models.ForeignKey(Shelf, related_name='locations', null=True,
+                              blank=True)
+
+    def __str__(self):
+        name = [self.site.name]
+        if self.room:
+            name.append(self.room.name)
+        if self.bench:
+            name.append(self.bench.name)
+        if self.rack:
+            name.append(self.rack.name)
+        if self.shelf:
+            name.append(self.shelf.name)
+
+        return '->'.join(name)
