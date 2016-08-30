@@ -1,5 +1,3 @@
-from django.test import TestCase
-
 from ossem_app import models
 from .base_test import BaseTestCase
 
@@ -57,7 +55,7 @@ class ModelTests(BaseTestCase):
         self.assertIn(self.devs[0], saved_rack.devices)
 
     def test_location(self):
-        # verify we can look up the location on out names
+        # verify we can look up the location on our names
         # This should be done first when creating a new location to verify that
         # we are not creating new locations when not necessary
         saved_location = models.Location.objects.get(
