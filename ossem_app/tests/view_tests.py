@@ -13,4 +13,5 @@ class DeviceView(BaseTestCase):
         pass
 
     def test_device_details_view(self):
-        pass
+        response = self.client.get('/ossem/{}/'.format(self.device.id))
+        self.assertTemplateUsed(response, 'device_details.html')

@@ -28,6 +28,14 @@ class Resource(models.Model):
     parent = models.ForeignKey('self', related_name='children', null=True,
                                blank=True)
 
+    @property
+    def manufacturer(self):
+        return self.model.manufacturer
+
+    @property
+    def size(self):
+        return self.model.size
+
     class Meta:
         abstract = True
 

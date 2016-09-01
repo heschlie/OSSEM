@@ -14,7 +14,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from ossem_app import urls as ossem_urls
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^ossem/', include(ossem_urls)),
 ]
