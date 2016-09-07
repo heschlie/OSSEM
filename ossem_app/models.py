@@ -31,6 +31,8 @@ class Resource(models.Model):
     model = models.ForeignKey(Model_, related_name='devices', default=None)
     parent = models.ForeignKey('self', related_name='children', null=True,
                                blank=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     @property
     def manufacturer(self):

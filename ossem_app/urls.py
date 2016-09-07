@@ -16,5 +16,6 @@ from django.conf.urls import url
 from ossem_app import views
 
 urlpatterns = [
-    url(r'^(\d+)/$', views.device_details, name='device_details')
+    url(r'^(\d+)/$', views.device_details, name='device_details'),
+    url(r'^list/$', views.device_list, name='device_list'),
 ]
