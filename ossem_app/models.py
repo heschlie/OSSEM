@@ -19,7 +19,11 @@ class Model_(models.Model):
     estimated_kva_draw = models.FloatField(default=0.0)
 
     def __str__(self):
-        return self.name
+        return '{} :: {}'.format(self.manufacturer, self.name)
+
+    class Meta:
+
+        ordering = ['manufacturer', 'name']
 
 
 class Resource(models.Model):
