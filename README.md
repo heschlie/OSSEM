@@ -47,13 +47,11 @@ building
 
   - Number of Rooms
   - Number of Racks
-  - Number of Shelves
-  - Number of Benches
   - Number of devices
 
 ### Datacenter
 
-The Room would be where something is stored, valid children would be
+The Datacenter would be where something is stored, valid children would be
 things such as [Rack](#rack), [Device](), etc...
 
 **Fields:**
@@ -67,9 +65,7 @@ things such as [Rack](#rack), [Device](), etc...
 **Generated Fields:**
 
   - Number of racks
-  - Number of shelves
   - Number of Devices
-  - Power Capacity
 
 ### Rack
 
@@ -82,7 +78,7 @@ it will rely on the power required field for Devices.
   - Required
       - Name (just a text field so numbers work fine too)
       - Total Rack Units
-      - [Room](#room)
+      - [Datacenter](#datacenter)
   - Optional
       - Power capacity
 
